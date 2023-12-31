@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-app.use(cors());
+// app.use(cors());
+app.use(express.json());
 require("dotenv").config();
 const port = process.env.PORT || 8000;
 const { readdirSync } = require("fs");
@@ -18,7 +19,7 @@ mongoose
     console.error("MongoDB Connection Error:", err);
   });
 
-readdirSync("./routes").map((file) => app.use("/api/", require("./routes/" + file)));
+readdirSync("./routes").map((file) => app.use("/api", require("./routes/" + file)));
 
 app.get("/", (req, res) => {
   res.send("Wazzup!");
